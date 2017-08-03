@@ -1,32 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This is an implementation for caching of inverse matrix for a matrix.
+## 
 
-## Write a short comment describing this function
+## makeCacheMatrix creates a special matrix in which inverse of the matrix can be cached
 
 makeCacheMatrix <- function(x = matrix()) {
-  inv <- NULL
-  set <- function(y) {
+  ## inv - used to store the inverse of the matrix
+  inv <- NULL     
+  set <- function(y) {   ## function to set the matrix
     x <<- y
     inv <<- NULL
   }
-  get <- function() x
-  setinverse <- function (invmatrix) inv <<- invmatrix
-  getinverse <- function () inv
+  get <- function() x   ## function to get the matrix
+  setinverse <- function (invmatrix) inv <<- invmatrix  ## function to set the inverse of the matrix
+  getinverse <- function () inv  ## function to get the inverse of the matrix
+  ## Returns list of functions to set a matrix, get the matrix, set the inverse of the matrix and
+  ## get the inverse of the matrix  
   list(get=get, set=set, getinverse=getinverse, setinverse=setinverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve returns the inverse of a special matrix from the cache or it sets the inverse matrix
+## to the cache
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
   invm <- x$getinverse()
   if (!is.null(invm)){
     print("Getting the inverse of matrix from Cache")
-    return(invm)
+    return(invm)  ## Return a matrix that is the inverse of 'x' from cache
   }
   mat <- x$get()
-  invm <- solve(mat,...)
-  x$setinverse(invm)
-  invm
+  invm <- solve(mat,...)  ## Forming the inverse of matrix 'x'
+  x$setinverse(invm)    ## Set the inverse of matrix in Cache
+  invm   ## Return a matrix that is the inverse of 'x'
 }
